@@ -4,7 +4,8 @@ from opensearchpy import OpenSearch, RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
 REGION = 'us-east-1'
-HOST = 'search-photos-opensearch-e6smzo4lfrm6i6f7yf55zki7xi.us-east-1.es.amazonaws.com'
+# Updates opensearch url
+HOST = 'search-photos-mk7j6jxugf6xjduc55mubmrlda.us-east-1.es.amazonaws.com'
 INDEX = 'photos'
 
 def lambda_handler(event, context):
