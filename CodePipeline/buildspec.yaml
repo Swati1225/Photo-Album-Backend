@@ -1,0 +1,28 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+  pre_build:
+    commands:
+      echo Pre-Build started on `date`
+      pip install -r requirements.txt -t lib
+  build:
+    commands:
+      echo Zip package started on `date`
+      - cd lib
+      - zip -r9 ../deployment_package.zip .
+      - cd ..
+      - zip -r deployment_package.zip search-photos.py
+      - echo "Updating lambda Function..."
+      - aws lambda update-function-code --function-name search-photos-s3 --zip-file fileb://deployment_package.zip
+      - aws lambda update-function-code --function-name search-photos-s3 --region $us-east-1 --zip-file fileb://deployment_package.zip 
+      - echo "Lambda Function Update Complete!!"
+  post_build:
+    commands:
+      - echo "Post Build Commands"
+  artifacts:
+  type: zip
+  files:
+    - deployment_package.zip
